@@ -155,7 +155,7 @@ resource "aws_instance" "default" {
 
   tags = module.this.tags
 
-  volume_tags = var.volume_tags_enabled ? module.this.tags : {}
+  volume_tags = var.volume_tags_enabled ? var.volume_tags != {} ? var.volume_tags : module.this.tags : {}
 }
 
 resource "aws_eip" "default" {
@@ -171,7 +171,7 @@ resource "aws_ebs_volume" "default" {
   size              = var.ebs_volume_size
   iops              = local.ebs_iops
   type              = var.ebs_volume_type
-  tags              = module.this.tags
+  tags              = var.volume_tags_enabled ? var.volume_tags != {} ? var.volume_tags : module.this.tags : {}
   encrypted         = var.ebs_volume_encrypted
   kms_key_id        = var.kms_key_id
 }
