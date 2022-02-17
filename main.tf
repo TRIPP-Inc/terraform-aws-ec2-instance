@@ -20,7 +20,7 @@ locals {
     var.associate_public_ip_address && var.assign_eip_address && module.this.enabled ?
     local.eip_public_dns : join("", aws_instance.default.*.public_dns)
   )
-  volume_tags = var.volume_tags != {} ? var.volume_tags : module.this.tags
+  volume_tags = var.volume_tags != null ? var.volume_tags : module.this.tags
 }
 
 data "aws_caller_identity" "default" {
@@ -156,7 +156,7 @@ resource "aws_instance" "default" {
 
   tags = module.this.tags
 
-  volume_tags = var.volume_tags_enabled ? local.volume_tags : {}
+  volume_tags = var.volume_tags_enabled ? local.volume_tags : null
 }
 
 resource "aws_eip" "default" {
@@ -172,7 +172,7 @@ resource "aws_ebs_volume" "default" {
   size              = var.ebs_volume_size
   iops              = local.ebs_iops
   type              = var.ebs_volume_type
-  tags              = var.volume_tags_enabled ? local.volume_tags : {}
+  tags              = var.volume_tags_enabled ? local.volume_tags : null
   encrypted         = var.ebs_volume_encrypted
   kms_key_id        = var.kms_key_id
 }
