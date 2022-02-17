@@ -157,6 +157,13 @@ resource "aws_instance" "default" {
   tags = module.this.tags
 
   volume_tags = var.volume_tags_enabled ? local.volume_tags : null
+
+  lifecycle {
+    ignore_changes = [
+      volume_tags.Terraform,
+      volume_tags.Provider
+    ]
+  }
 }
 
 resource "aws_eip" "default" {
