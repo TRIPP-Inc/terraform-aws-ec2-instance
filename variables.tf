@@ -327,6 +327,12 @@ variable "volume_tags_enabled" {
   description = "Whether or not to copy instance tags to root and EBS volumes"
 }
 
+variable "volume_tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional volume tags (e.g. `{'EC2Instance': 'XYZ'}`). If defined and volume_tags_enabled=true (default) it overrides `tags`."
+}
+
 variable "ssm_patch_manager_enabled" {
   type        = bool
   default     = false
@@ -344,4 +350,3 @@ variable "ssm_patch_manager_s3_log_bucket" {
   default     = null
   description = "The name of the s3 bucket to export the patch log to"
 }
-
