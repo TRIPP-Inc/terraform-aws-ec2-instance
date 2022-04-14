@@ -161,7 +161,8 @@ resource "aws_instance" "default" {
   lifecycle {
     ignore_changes = [
       volume_tags["Terraform"],
-      volume_tags["Provider"]
+      volume_tags["Provider"],
+      ami
     ]
   }
 }
